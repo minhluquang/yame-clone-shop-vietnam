@@ -1,13 +1,11 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { MinusIcon, PlusIcon, ShoppingCart, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
-import { PaymentDialog } from "@/components/checkout/PaymentDialog";
 
 // Mock cart data
 const initialCartItems = [
@@ -34,8 +32,8 @@ const initialCartItems = [
 const CartPage = () => {
   const [cartItems, setCartItems] = useState(initialCartItems);
   const [selectedItems, setSelectedItems] = useState<string[]>(initialCartItems.map(item => item.id));
-  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return;
@@ -81,15 +79,12 @@ const CartPage = () => {
 
   const allSelected = cartItems.length > 0 && selectedItems.length === cartItems.length;
   
-  const handlePaymentComplete = () => {
-    // Xóa các sản phẩm đã thanh toán khỏi giỏ hàng
-    const remainingItems = cartItems.filter(item => !selectedItems.includes(item.id));
-    setCartItems(remainingItems);
-    setSelectedItems([]);
-    
-    toast({
-      title: "Đặt hàng thành công",
-      description: "Đơn hàng của bạn đã được xác nhận."
+  const handleProceedToCheckout = () => {
+    navigate("/thanh-toan", { 
+      state: { 
+        cartItems,
+        selectedItems
+      } 
     });
   };
 
@@ -237,7 +232,7 @@ const CartPage = () => {
                 <Button 
                   className="w-full" 
                   disabled={selectedItems.length === 0}
-                  onClick={() => setPaymentDialogOpen(true)}
+                  onClick={handleProceedToCheckout}
                 >
                   Thanh toán
                 </Button>
@@ -251,14 +246,6 @@ const CartPage = () => {
             </div>
           </div>
         )}
-        
-        {/* Payment Dialog Component */}
-        <PaymentDialog 
-          open={paymentDialogOpen} 
-          onOpenChange={setPaymentDialogOpen}
-          totalAmount={total}
-          onPaymentComplete={handlePaymentComplete}
-        />
       </div>
     </Layout>
   );

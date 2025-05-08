@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import CategoryPage from "./pages/CategoryPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/danh-muc/:categorySlug" element={<CategoryPage />} />
           <Route path="/san-pham/:productSlug" element={<ProductDetailPage />} />
           <Route path="/gio-hang" element={<CartPage />} />
+          <Route path="/thanh-toan" element={<CheckoutPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
