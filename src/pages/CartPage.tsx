@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { MinusIcon, PlusIcon, ShoppingCart, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PaymentDialog } from "@/components/checkout/PaymentDialog";
 
 // Mock cart data
 const initialCartItems = [
@@ -33,6 +34,7 @@ const initialCartItems = [
 const CartPage = () => {
   const [cartItems, setCartItems] = useState(initialCartItems);
   const [selectedItems, setSelectedItems] = useState<string[]>(initialCartItems.map(item => item.id));
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const { toast } = useToast();
   
   const updateQuantity = (id: string, newQuantity: number) => {
@@ -78,6 +80,18 @@ const CartPage = () => {
   const total = subtotal + shippingFee;
 
   const allSelected = cartItems.length > 0 && selectedItems.length === cartItems.length;
+  
+  const handlePaymentComplete = () => {
+    // Xóa các sản phẩm đã thanh toán khỏi giỏ hàng
+    const remainingItems = cartItems.filter(item => !selectedItems.includes(item.id));
+    setCartItems(remainingItems);
+    setSelectedItems([]);
+    
+    toast({
+      title: "Đặt hàng thành công",
+      description: "Đơn hàng của bạn đã được xác nhận."
+    });
+  };
 
   return (
     <Layout>
@@ -223,6 +237,7 @@ const CartPage = () => {
                 <Button 
                   className="w-full" 
                   disabled={selectedItems.length === 0}
+                  onClick={() => setPaymentDialogOpen(true)}
                 >
                   Thanh toán
                 </Button>
@@ -236,6 +251,14 @@ const CartPage = () => {
             </div>
           </div>
         )}
+        
+        {/* Payment Dialog Component */}
+        <PaymentDialog 
+          open={paymentDialogOpen} 
+          onOpenChange={setPaymentDialogOpen}
+          totalAmount={total}
+          onPaymentComplete={handlePaymentComplete}
+        />
       </div>
     </Layout>
   );
