@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { MinusIcon, PlusIcon, ShoppingCart, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Mock cart data
 const initialCartItems = [
@@ -31,6 +32,7 @@ const initialCartItems = [
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState(initialCartItems);
+  const [selectedItems, setSelectedItems] = useState<string[]>(initialCartItems.map(item => item.id));
   const { toast } = useToast();
   
   const updateQuantity = (id: string, newQuantity: number) => {
@@ -45,19 +47,37 @@ const CartPage = () => {
   
   const removeItem = (id: string) => {
     setCartItems(cartItems.filter(item => item.id !== id));
+    setSelectedItems(selectedItems.filter(itemId => itemId !== id));
     toast({
       title: "Đã xóa sản phẩm",
       description: "Sản phẩm đã được xóa khỏi giỏ hàng."
     });
   };
+
+  const toggleSelectItem = (id: string, isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedItems([...selectedItems, id]);
+    } else {
+      setSelectedItems(selectedItems.filter(itemId => itemId !== id));
+    }
+  };
+
+  const toggleSelectAll = (isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedItems(cartItems.map(item => item.id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
   
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const subtotal = cartItems
+    .filter(item => selectedItems.includes(item.id))
+    .reduce((total, item) => total + item.price * item.quantity, 0);
   
   const shippingFee = subtotal >= 300000 ? 0 : 30000;
   const total = subtotal + shippingFee;
+
+  const allSelected = cartItems.length > 0 && selectedItems.length === cartItems.length;
 
   return (
     <Layout>
@@ -79,7 +99,16 @@ const CartPage = () => {
             <div className="lg:col-span-2">
               <div className="border rounded-md">
                 <div className="bg-gray-50 px-6 py-4 rounded-t-md hidden sm:grid grid-cols-12 text-sm font-medium">
-                  <div className="col-span-6">Sản phẩm</div>
+                  <div className="col-span-6 flex items-center gap-3">
+                    <Checkbox 
+                      id="select-all" 
+                      checked={allSelected}
+                      onCheckedChange={(checked) => toggleSelectAll(!!checked)} 
+                    />
+                    <label htmlFor="select-all" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      Sản phẩm
+                    </label>
+                  </div>
                   <div className="col-span-2">Giá</div>
                   <div className="col-span-2">Số lượng</div>
                   <div className="col-span-2 text-right">Tổng</div>
@@ -90,6 +119,13 @@ const CartPage = () => {
                     <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                       {/* Mobile: Product, Desktop: Product with info */}
                       <div className="sm:col-span-6 flex gap-4">
+                        <div className="flex items-center">
+                          <Checkbox 
+                            id={`select-${item.id}`} 
+                            checked={selectedItems.includes(item.id)}
+                            onCheckedChange={(checked) => toggleSelectItem(item.id, !!checked)}
+                          />
+                        </div>
                         <div className="w-20 h-20 flex-shrink-0">
                           <img
                             src={item.image}
@@ -184,7 +220,12 @@ const CartPage = () => {
                   <span>{total.toLocaleString()}₫</span>
                 </div>
                 
-                <Button className="w-full">Thanh toán</Button>
+                <Button 
+                  className="w-full" 
+                  disabled={selectedItems.length === 0}
+                >
+                  Thanh toán
+                </Button>
                 
                 <div className="mt-4 text-center">
                   <Link to="/" className="text-sm text-navy hover:underline">
