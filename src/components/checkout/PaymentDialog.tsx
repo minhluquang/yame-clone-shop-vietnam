@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Check, CreditCard, X } from "lucide-react";
 
 const formSchema = z.object({
@@ -30,7 +30,7 @@ export function PaymentDialog({ open, onOpenChange, totalAmount, onPaymentComple
   const [paymentStep, setPaymentStep] = useState<"shipping" | "payment" | "complete">("shipping");
   const [paymentMethod, setPaymentMethod] = useState<"bank" | "cod">("cod");
   const [isProcessing, setIsProcessing] = useState(false);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
