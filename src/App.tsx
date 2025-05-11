@@ -11,6 +11,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import CheckoutSteps from "./pages/CheckoutSteps";
+import UserProfilePage from "./pages/UserProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/gio-hang" element={<CartPage />} />
           <Route path="/thanh-toan" element={<CheckoutPage />} />
           <Route path="/thanh-toan-buoc" element={<CheckoutSteps />} />
+          <Route path="/tai-khoan" element={<UserProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

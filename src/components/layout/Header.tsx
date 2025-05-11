@@ -58,9 +58,11 @@ export function Header() {
               <Search className="w-5 h-5" />
             </Button>
             
-            <Button variant="ghost" size="icon">
-              <User className="w-5 h-5" />
-            </Button>
+            <Link to="/tai-khoan">
+              <Button variant="ghost" size="icon">
+                <User className="w-5 h-5" />
+              </Button>
+            </Link>
             
             <Link to="/gio-hang">
               <Button variant="ghost" size="icon">
