@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function UserProfilePage() {
   const [user, setUser] = useState<UserProfile>(mockUserData);
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState("thong-tin");
 
   const handleUpdatePersonalInfo = (updatedInfo: Partial<UserProfile>) => {
     setUser({ ...user, ...updatedInfo });
@@ -56,6 +57,10 @@ export default function UserProfilePage() {
     });
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
+
   return (
     <Layout>
       <div className="container-custom py-6">
@@ -70,24 +75,31 @@ export default function UserProfilePage() {
                   <div className="font-medium">{user.fullName}</div>
                   <div className="text-sm text-muted-foreground">{user.email}</div>
                 </div>
-                <TabsList className="flex flex-col items-stretch h-auto bg-transparent border-0">
-                  {["thong-tin", "dia-chi", "don-hang"].map((value, index) => (
-                    <TabsTrigger
-                      key={value}
-                      value={value}
-                      className="justify-start py-3 px-4 border-b last:border-b-0 data-[state=active]:bg-muted rounded-none text-left"
-                    >
-                      {["Thông tin tài khoản", "Địa chỉ giao hàng", "Lịch sử đơn hàng"][index]}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+                <Tabs 
+                  value={activeTab} 
+                  onValueChange={handleTabChange} 
+                  orientation="vertical" 
+                  className="w-full"
+                >
+                  <TabsList className="flex flex-col items-stretch h-auto bg-transparent border-0">
+                    {["thong-tin", "dia-chi", "don-hang"].map((value, index) => (
+                      <TabsTrigger
+                        key={value}
+                        value={value}
+                        className="justify-start py-3 px-4 border-b last:border-b-0 data-[state=active]:bg-muted rounded-none text-left"
+                      >
+                        {["Thông tin tài khoản", "Địa chỉ giao hàng", "Lịch sử đơn hàng"][index]}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
               </div>
             </div>
           </div>
 
           {/* Main content */}
           <div className="md:col-span-9">
-            <Tabs defaultValue="thong-tin" className="w-full">
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               {/* Mobile tabs */}
               <TabsList className="md:hidden w-full mb-6 flex justify-start overflow-x-auto">
                 <TabsTrigger value="thong-tin">Thông tin tài khoản</TabsTrigger>
