@@ -6,6 +6,37 @@ import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
+// Sample cart data for demonstration
+const sampleCartItems = [
+  {
+    id: "1",
+    name: "Áo phông trắng basic",
+    price: 199000,
+    quantity: 1,
+    size: "L",
+    color: "Trắng",
+    image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=200&auto=format&fit=crop",
+  },
+  {
+    id: "2",
+    name: "Quần jean nam slim fit",
+    price: 499000,
+    quantity: 1,
+    size: "32",
+    color: "Xanh đậm",
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=200&auto=format&fit=crop",
+  },
+  {
+    id: "3",
+    name: "Giày thể thao nữ",
+    price: 850000,
+    quantity: 1,
+    size: "38",
+    color: "Hồng",
+    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=200&auto=format&fit=crop",
+  }
+];
+
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -13,10 +44,19 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve cart items from local storage on component mount
+    // For demo purposes, load sample data if cart is empty
     const storedCartItems = localStorage.getItem("cartItems");
-    if (storedCartItems) {
+    if (storedCartItems && JSON.parse(storedCartItems).length > 0) {
       setCartItems(JSON.parse(storedCartItems));
+      // Select all items by default
+      setSelectedItems(JSON.parse(storedCartItems).map(item => item.id));
+    } else {
+      // Add sample items to cart if empty
+      setCartItems(sampleCartItems);
+      // Select all sample items by default
+      setSelectedItems(sampleCartItems.map(item => item.id));
+      // Store sample items in localStorage
+      localStorage.setItem("cartItems", JSON.stringify(sampleCartItems));
     }
   }, []);
 
