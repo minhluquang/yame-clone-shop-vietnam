@@ -10,6 +10,7 @@ import CategoryPage from "./pages/CategoryPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import CheckoutSteps from "./pages/CheckoutSteps";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/san-pham/:productSlug" element={<ProductDetailPage />} />
           <Route path="/gio-hang" element={<CartPage />} />
           <Route path="/thanh-toan" element={<CheckoutPage />} />
+          <Route path="/thanh-toan-buoc" element={<CheckoutSteps />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
