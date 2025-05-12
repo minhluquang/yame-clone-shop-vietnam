@@ -4,8 +4,7 @@ import {
   Card, 
   CardHeader, 
   CardTitle, 
-  CardContent, 
-  CardFooter 
+  CardContent
 } from "@/components/ui/card";
 import { 
   Dialog,
