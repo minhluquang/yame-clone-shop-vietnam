@@ -12,7 +12,8 @@ export const mockReviews = {
         variant: "Trắng - M",
         comment: "Áo đẹp quá! Form dáng rất đẹp, chất liệu cotton mềm mịn. Mặc rất thoải mái và thoáng mát. Màu trắng rất dễ phối đồ. Sẽ ủng hộ shop tiếp!",
         images: ["/placeholder.svg", "/placeholder.svg"],
-        helpful: 18
+        helpful: 18,
+        unhelpful: 2
       },
       {
         id: "r11", 
@@ -22,7 +23,8 @@ export const mockReviews = {
         variant: "Đen - L",
         comment: "Chất lượng tuyệt vời! Áo có form đẹp, không bị co rút sau khi giặt. Giá cả hợp lý so với chất lượng. Đặc biệt là cổ áo không bị giãn.",
         images: ["/placeholder.svg"],
-        helpful: 14
+        helpful: 14,
+        unhelpful: 1
       },
       {
         id: "r12",
@@ -31,7 +33,8 @@ export const mockReviews = {
         rating: 4,
         variant: "Xám - S",
         comment: "Áo đẹp, chất liệu tốt. Tuy nhiên màu xám hơi nhạt so với hình. Nhìn chung vẫn rất hài lòng.",
-        helpful: 11
+        helpful: 11,
+        unhelpful: 3
       },
       {
         id: "r13",
@@ -41,7 +44,8 @@ export const mockReviews = {
         variant: "Trắng - S", 
         comment: "Perfect! Áo vừa vặn, chất liệu cotton cao cấp. Mặc cả ngày vẫn thoải mái. Shop giao hàng nhanh và đóng gói cẩn thận.",
         images: ["/placeholder.svg"],
-        helpful: 16
+        helpful: 16,
+        unhelpful: 0
       },
       {
         id: "r14",
@@ -50,7 +54,8 @@ export const mockReviews = {
         rating: 4,
         variant: "Đen - XL",
         comment: "Áo tốt, form chuẩn. Chỉ có điều hơi mỏng so với mong đợi. Tuy nhiên vẫn đáng tiền.",
-        helpful: 8
+        helpful: 8,
+        unhelpful: 4
       },
       {
         id: "r15",

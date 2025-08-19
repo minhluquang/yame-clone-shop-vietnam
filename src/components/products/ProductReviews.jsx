@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, StarIcon } from "lucide-react";
+import { Star, StarIcon, ThumbsUp, ThumbsDown } from "lucide-react";
 
 const StarRating = ({ rating, size = "sm" }) => {
   const sizeClasses = size === "lg" ? "w-5 h-5" : "w-4 h-4";
@@ -25,6 +25,36 @@ const StarRating = ({ rating, size = "sm" }) => {
 };
 
 const ReviewCard = ({ review }) => {
+  const [voteState, setVoteState] = useState(null); // 'up', 'down', or null
+  const [helpfulCount, setHelpfulCount] = useState(review.helpful || 0);
+  const [unhelpfulCount, setUnhelpfulCount] = useState(review.unhelpful || 0);
+
+  const handleVote = (type) => {
+    if (voteState === type) {
+      // Remove vote
+      if (type === 'up') {
+        setHelpfulCount(prev => prev - 1);
+      } else {
+        setUnhelpfulCount(prev => prev - 1);
+      }
+      setVoteState(null);
+    } else {
+      // Add or change vote
+      if (voteState === 'up') {
+        setHelpfulCount(prev => prev - 1);
+      } else if (voteState === 'down') {
+        setUnhelpfulCount(prev => prev - 1);
+      }
+      
+      if (type === 'up') {
+        setHelpfulCount(prev => prev + 1);
+      } else {
+        setUnhelpfulCount(prev => prev + 1);
+      }
+      setVoteState(type);
+    }
+  };
+
   return (
     <Card className="p-6 mb-4">
       <div className="flex items-start gap-4">
@@ -70,11 +100,44 @@ const ReviewCard = ({ review }) => {
             </div>
           )}
           
-          {review.helpful && (
-            <div className="text-xs text-muted-foreground">
-              👍 {review.helpful} người thấy hữu ích
+          {/* Vote buttons */}
+          <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-8 px-2 gap-1 ${
+                  voteState === 'up' 
+                    ? 'text-green-600 bg-green-50 hover:bg-green-100' 
+                    : 'text-muted-foreground hover:text-green-600'
+                }`}
+                onClick={() => handleVote('up')}
+              >
+                <ThumbsUp className="w-3 h-3" />
+                <span className="text-xs">{helpfulCount}</span>
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-8 px-2 gap-1 ${
+                  voteState === 'down' 
+                    ? 'text-red-600 bg-red-50 hover:bg-red-100' 
+                    : 'text-muted-foreground hover:text-red-600'
+                }`}
+                onClick={() => handleVote('down')}
+              >
+                <ThumbsDown className="w-3 h-3" />
+                <span className="text-xs">{unhelpfulCount}</span>
+              </Button>
             </div>
-          )}
+            
+            <div className="text-xs text-muted-foreground">
+              {voteState === 'up' && "Bạn thấy hữu ích"}
+              {voteState === 'down' && "Bạn thấy không hữu ích"}
+              {!voteState && "Đánh giá này có hữu ích không?"}
+            </div>
+          </div>
         </div>
       </div>
     </Card>
