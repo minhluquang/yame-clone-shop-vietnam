@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { ProductReviews } from "@/components/products/ProductReviews";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MinusIcon, PlusIcon, ShoppingCart } from "lucide-react";
+import { MinusIcon, PlusIcon, ShoppingCart, StarIcon } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { getProductReviews } from "@/data/mockReviews";
 
@@ -103,6 +103,41 @@ const ProductDetailPage = () => {
           {/* Product info */}
           <div>
             <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
+            
+            {/* Product Summary */}
+            {reviewData && (
+              <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <StarIcon
+                        key={star}
+                        className={`w-4 h-4 ${
+                          star <= Math.round(reviewData.averageRating)
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "fill-gray-200 text-gray-200"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-medium text-sm">
+                    {reviewData.averageRating.toFixed(1)}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <span className="font-medium text-foreground">{reviewData.totalReviews}</span>
+                    đánh giá
+                  </span>
+                  <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                  <span className="flex items-center gap-1">
+                    <span className="font-medium text-foreground">{reviewData.totalSales}</span>
+                    đã bán
+                  </span>
+                </div>
+              </div>
+            )}
             
             <div className="flex items-baseline gap-3 mt-4">
               <span className="text-xl font-bold">{product.price.toLocaleString()}₫</span>
