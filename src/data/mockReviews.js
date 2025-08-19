@@ -1,4 +1,87 @@
 export const mockReviews = {
+  "ao-thun-co-tron-don-gian": {
+    averageRating: 4.8,
+    totalReviews: 156,
+    totalSales: 943,
+    reviews: [
+      {
+        id: "r10",
+        reviewerName: "Hương Ly",
+        date: "2025-01-16",
+        rating: 5,
+        variant: "Trắng - M",
+        comment: "Áo đẹp quá! Form dáng rất đẹp, chất liệu cotton mềm mịn. Mặc rất thoải mái và thoáng mát. Màu trắng rất dễ phối đồ. Sẽ ủng hộ shop tiếp!",
+        images: ["/placeholder.svg", "/placeholder.svg"],
+        helpful: 18
+      },
+      {
+        id: "r11", 
+        reviewerName: "Trung Kiên",
+        date: "2025-01-14",
+        rating: 5,
+        variant: "Đen - L",
+        comment: "Chất lượng tuyệt vời! Áo có form đẹp, không bị co rút sau khi giặt. Giá cả hợp lý so với chất lượng. Đặc biệt là cổ áo không bị giãn.",
+        images: ["/placeholder.svg"],
+        helpful: 14
+      },
+      {
+        id: "r12",
+        reviewerName: "Minh Tú",
+        date: "2025-01-13", 
+        rating: 4,
+        variant: "Xám - S",
+        comment: "Áo đẹp, chất liệu tốt. Tuy nhiên màu xám hơi nhạt so với hình. Nhìn chung vẫn rất hài lòng.",
+        helpful: 11
+      },
+      {
+        id: "r13",
+        reviewerName: "Thảo My",
+        date: "2025-01-12",
+        rating: 5,
+        variant: "Trắng - S", 
+        comment: "Perfect! Áo vừa vặn, chất liệu cotton cao cấp. Mặc cả ngày vẫn thoải mái. Shop giao hàng nhanh và đóng gói cẩn thận.",
+        images: ["/placeholder.svg"],
+        helpful: 16
+      },
+      {
+        id: "r14",
+        reviewerName: "Duy Khánh",
+        date: "2025-01-10",
+        rating: 4,
+        variant: "Đen - XL",
+        comment: "Áo tốt, form chuẩn. Chỉ có điều hơi mỏng so với mong đợi. Tuy nhiên vẫn đáng tiền.",
+        helpful: 8
+      },
+      {
+        id: "r15",
+        reviewerName: "Lan Anh",
+        date: "2025-01-09",
+        rating: 5,
+        variant: "Xám - M",
+        comment: "Rất ưng! Áo mềm mại, thấm hút mồ hôi tốt. Form áo đẹp, mặc lên người rất hợp. Sẽ mua thêm màu khác.",
+        helpful: 12
+      },
+      {
+        id: "r16",
+        reviewerName: "Hoàng Tâm",
+        date: "2025-01-08",
+        rating: 4,
+        variant: "Trắng - L",
+        comment: "Chất lượng ok, giá cả phù hợp. Áo đẹp và bền.",
+        helpful: 6
+      },
+      {
+        id: "r17",
+        reviewerName: "Phương Thảo",
+        date: "2025-01-06",
+        rating: 5,
+        variant: "Đen - M",
+        comment: "Yêu lắm! Áo có form đẹp, chất liệu mềm mịn. Màu đen rất sang trọng và dễ phối đồ. Highly recommended!",
+        images: ["/placeholder.svg", "/placeholder.svg"],
+        helpful: 20
+      }
+    ]
+  },
   "ao-thun-basic-trang": {
     averageRating: 4.6,
     totalReviews: 127,
