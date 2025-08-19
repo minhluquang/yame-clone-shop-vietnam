@@ -6,9 +6,11 @@ import { getProductBySlug, getProductsByCategory, Product } from "@/data/product
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/products/ProductGrid";
+import { ProductReviews } from "@/components/products/ProductReviews";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MinusIcon, PlusIcon, ShoppingCart } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { getProductReviews } from "@/data/mockReviews";
 
 const ProductDetailPage = () => {
   const { productSlug } = useParams<{ productSlug: string }>();
@@ -22,6 +24,8 @@ const ProductDetailPage = () => {
   const relatedProducts: Product[] = product 
     ? getProductsByCategory(product.category).filter(p => p.id !== product.id).slice(0, 4)
     : [];
+    
+  const reviewData = productSlug ? getProductReviews(productSlug) : null;
   
   if (!product) {
     return (
@@ -200,6 +204,9 @@ const ProductDetailPage = () => {
               <TabsTrigger value="shipping" className="rounded-none border-b-2 border-transparent data-[state=active]:border-navy">
                 Vận chuyển & Đổi trả
               </TabsTrigger>
+              <TabsTrigger value="reviews" className="rounded-none border-b-2 border-transparent data-[state=active]:border-navy">
+                Đánh giá ({reviewData?.totalReviews || 0})
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="description" className="pt-6">
               <p className="text-gray-700 leading-relaxed">{product.description}</p>
@@ -210,6 +217,16 @@ const ProductDetailPage = () => {
               
               <h3 className="font-medium mb-2">Chính sách đổi trả</h3>
               <p className="text-gray-700">YAME hỗ trợ đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng nếu sản phẩm còn nguyên tem mác, chưa qua sử dụng.</p>
+            </TabsContent>
+            <TabsContent value="reviews" className="pt-6">
+              {reviewData && (
+                <ProductReviews 
+                  reviews={reviewData.reviews}
+                  averageRating={reviewData.averageRating}
+                  totalReviews={reviewData.totalReviews}
+                  totalSales={reviewData.totalSales}
+                />
+              )}
             </TabsContent>
           </Tabs>
         </div>
